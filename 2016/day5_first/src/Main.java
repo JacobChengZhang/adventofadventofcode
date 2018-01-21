@@ -3,15 +3,16 @@ import java.security.*;
 
 public class Main {
     // assume that the puzzleInput is valid
-    static final String input = "a";//"cxdnnyjw";
+    static final String input = "cxdnnyjw";
 
     byte[] message = null;
     MessageDigest md = null;
     byte[] digest = null;
 
-    void md5() {
+    char md5(int num) {
+
         try {
-            message = input.getBytes("UTF-8");
+            message = (input + Integer.toString(num)).getBytes("UTF-8");
         } catch (UnsupportedEncodingException ex) {
             System.out.println(ex.getMessage());
         }
@@ -33,12 +34,27 @@ public class Main {
             sb.append(hex);
         }
 
-        System.out.println(sb.toString());
+        if (sb.toString().startsWith("00000")) {
+            return sb.charAt(5);
+        }
+        else {
+            return '!';
+        }
     }
 
     public static void main(String[] args) {
         Main m = new Main();
 
-        m.md5();
+        StringBuilder sb = new StringBuilder();
+        int times = 0;
+        for (int i = 0; times < 8; i++) {
+            char ch = m.md5(i);
+            if (ch != '!') {
+                sb.append(ch);
+                times++;
+            }
+        }
+
+        System.out.println(sb.toString());
     }
 }
