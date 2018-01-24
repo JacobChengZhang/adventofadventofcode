@@ -10,7 +10,7 @@ public class Day1 {
     public static void main(String[] args) {
         getInput(input);
 
-        System.out.println(floor);
+        System.out.println("[First Part]At last, it's " + floor + " floor.");
     }
 
     static void getInput(String filepath) {
@@ -18,6 +18,8 @@ public class Day1 {
         try {
             reader = new BufferedReader(new FileReader(filepath));
             int ch = 0;
+            int num = 1;
+            boolean findAns = false;
             while ((ch = reader.read()) != -1) {
                 if (ch == '(') {
                     floor++;
@@ -26,6 +28,13 @@ public class Day1 {
                 } else {
                     System.out.println("Bug found.");
                 }
+
+                if (!findAns && floor == -1) {
+                    System.out.println("[Second Part]Position is " + num);
+                    findAns = true;
+                }
+
+                num++;
             }
 
             reader.close();
